@@ -11,12 +11,6 @@ from nltk.corpus import stopwords
 sw_nltk = stopwords.words('spanish') + IGNORED
 sw_nltk = list(map(lambda x: unidecode(x), sw_nltk))
 
-# TODO: ignorar enlaces (http:// https://)
-# TODO: ignorar <Multimedia omitido>
-# TODO: ver que hacer con los emojis
-# TODO: ver que hacer con el código de programación enviado por whatsapp
-# TODO: ignorar numeros
-# TODO: ignorar JAJAJAJA jajajajaj hahahaha ejeje uyyy uffff mmmmmmm
 
 class Solver:
     def __init__(self, df):
@@ -30,6 +24,7 @@ class Solver:
             not word.isalpha() or
             re.search(r'^[jah]*$', word) or
             re.search(r'^[uy]*$', word) or
+            re.search(r'^[je]*$', word) or
             re.search(r'^[mm]*$', word) or
             re.search(r'^[uf]*$', word)
         ):
