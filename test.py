@@ -26,7 +26,10 @@ class Solver:
             re.search(r'^[uy]*$', word) or
             re.search(r'^[je]*$', word) or
             re.search(r'^[mm]*$', word) or
-            re.search(r'^[uf]*$', word)
+            re.search(r'^[uf]*$', word) or
+            re.search(r'^chimb[a]*$', word) or
+            re.search(r'^[oe]+$', word) or
+            re.search(r'^a[g]+$', word) 
         ):
             return False
         return True
