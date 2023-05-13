@@ -11,25 +11,29 @@ from nltk.corpus import stopwords
 sw_nltk = stopwords.words('spanish') + IGNORED
 sw_nltk = list(map(lambda x: unidecode(x), sw_nltk))
 
+IGNORED_REGEX = [
+    r'^[jah]*$',  r'^[uy]*$',  r'^[je]*$',
+    r'^[mm]*$',  r'^[uf]*$', r'^chimb[a]*$',
+    r'^[oe]+$',  r'^a[g]+$',
+]
 
 class Solver:
     def __init__(self, df):
         self.df = df
         self.words_count = {}
 
+    def ignored_regex(self, word):
+        return any(map(
+            lambda pattern: re.search(pattern, word),
+            IGNORED_REGEX
+        ))
+
     def check_word(self, word):
         if (
             len(word) < 2 or
             word in sw_nltk or
             not word.isalpha() or
-            re.search(r'^[jah]*$', word) or
-            re.search(r'^[uy]*$', word) or
-            re.search(r'^[je]*$', word) or
-            re.search(r'^[mm]*$', word) or
-            re.search(r'^[uf]*$', word) or
-            re.search(r'^chimb[a]*$', word) or
-            re.search(r'^[oe]+$', word) or
-            re.search(r'^a[g]+$', word) 
+            self.ignored_regex(word)
         ):
             return False
         return True
